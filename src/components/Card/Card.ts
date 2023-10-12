@@ -1,3 +1,5 @@
+import styles from "./Card.css"
+
 export enum Attribute {
     "name" = "name",
     "ep" = "ep",

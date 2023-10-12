@@ -1,6 +1,6 @@
-export const getCharacters = async (src: string) => {
+export const getCharacters = async () => {
     try{
-    const character = fetch(`${src}`).then(res => res.json());
+    const character = fetch(`https://rickandmortyapi.com/api/character`).then(res => res.json());
     return character;
     } catch (error){
         console.log(error)

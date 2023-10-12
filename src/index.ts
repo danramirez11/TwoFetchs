@@ -1,3 +1,4 @@
+
 import * as components from "./components/export";
 import Card, { Attribute } from "./components/Card/Card";
 import Character, { AttributeChar } from "./components/Character/Character";
@@ -14,12 +15,29 @@ class AppContainer extends HTMLElement {
       const episodes = await getEpisodes();
       this.render(episodes.results);
 
+      const button = this.shadowRoot?.querySelector("button");
+      button?.addEventListener("click", async ()=>{
+        const characters = await getCharacters();
+        this.renderCharacters(characters.results);
+      })
+    }
+
+    renderCharacters (data: any[]){
+        const divApi = this.shadowRoot?.querySelector(".characterdiv");
+        data.forEach((character) => {
+        const newCharacter = this.ownerDocument.createElement("my-char") as Character;
+        newCharacter.setAttribute(AttributeChar.img, character.image);
+        newCharacter.setAttribute(AttributeChar.name, character.name);
+        divApi?.appendChild(newCharacter)
+        })
+
     }
 
     render(episodesData:any){
       if(this.shadowRoot){
         this.shadowRoot.innerHTML=`
-        
+        <button>Otra hpta api</button>
+        <div class="characterdiv"></div>
         `
 
       episodesData.forEach((ep: any) => {
@@ -29,14 +47,6 @@ class AppContainer extends HTMLElement {
         newEpisode.setAttribute(Attribute.ep, ep.episode);
         div.appendChild(newEpisode)
 
-        ep.characters.forEach(async (character: string) => {
-            const characterData = await getCharacters(character);
-            const newCharacter = this.ownerDocument.createElement("my-char") as Character;
-            newCharacter.setAttribute(AttributeChar.img, characterData.image);
-            newCharacter.setAttribute(AttributeChar.name, characterData.name);
-            console.log(characterData.url)
-            div.appendChild(newCharacter);
-        })
         this.shadowRoot?.appendChild(div);
       })
 

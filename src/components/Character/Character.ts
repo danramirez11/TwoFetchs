@@ -1,6 +1,9 @@
+import styles from "./Character.css"
+
 export enum AttributeChar {
     "name" = "name",
     "img" = "img",
+
 }
 
 class Character extends HTMLElement {
@@ -38,8 +41,8 @@ class Character extends HTMLElement {
 
     render(){
         if (this.shadowRoot){
-            this.shadowRoot.innerHTML = `
-            <div class="card">
+            this.shadowRoot.innerHTML = `<style>${styles}</style>
+            <div class="char">
             <p>${this.name}</p>
             <img src="${this.img}">
             </div>
